@@ -81,7 +81,7 @@ export default class Message extends React.Component {
         <p>
           <button onClick={this.back}>返回</button>&nbsp;
           <button onClick={this.forward}>前进</button>&nbsp;
-          <hr />
+          {/* <hr /> */}
           <button onClick={this.reqPage}>页面跳转至百度</button>
         </p>
         <hr />

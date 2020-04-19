@@ -3,10 +3,10 @@ import React, { Component } from "react";
 //app接收store,接收store中最新的状态
 //import { INCREMENT, DECREMENT } from "../redux/action-types";
 
-import { increment, decrement } from "../redux/actions";
+//import { increment, decrement } from "../redux/actions";
 //引入这个模块里面的所有子模块
 //分别暴露
-//import * as actions from "../redux/actions";
+import * as actions from "../redux/actions";
 
 export default class App extends Component {
   // state = {
@@ -23,7 +23,7 @@ export default class App extends Component {
     // });
     console.log(number);
 
-    this.props.store.dispatch(increment(number));
+    this.props.store.dispatch(actions.increment(number));
   };
   decrement = () => {
     //1.得到选择增加数量
@@ -33,7 +33,7 @@ export default class App extends Component {
     //   type: DECREMENT,
     //   data: number,
     // });
-    this.props.store.dispatch(decrement(number));
+    this.props.store.dispatch(actions.decrement(number));
   };
   incrementIfOdd = () => {
     //1.得到选择增加数量
@@ -48,7 +48,7 @@ export default class App extends Component {
       //   type: INCREMENT,
       //   data: number,
       // });
-      this.props.store.dispatch(increment(number));
+      this.props.store.dispatch(actions.increment(number));
     }
   };
   incrementIfAsync = () => {
@@ -61,7 +61,7 @@ export default class App extends Component {
       //   type: INCREMENT,
       //   data: number,
       // });
-      this.props.store.dispatch(increment(number));
+      this.props.store.dispatch(actions.increment(number));
     }, 1000);
   };
 

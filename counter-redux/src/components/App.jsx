@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+//更新状态的操作交给redux,则不再写setState
+//app接收store,接收store中最新的状态
+import { INCREMENT, DECREMENT } from "../redux/action-types";
 
 export default class App extends Component {
   state = {
@@ -8,55 +11,50 @@ export default class App extends Component {
   increment = () => {
     //1.得到选择增加数量
     const number = this.numSelect.value * 1;
-
-    //2.得到原本的数据
-    const count = this.state.count;
-
-    //3.更新状态
-
-    this.setState({ count: count + number });
+    //调用store的方法更新状态，因为状态的方法在Reducer里
+    // this.props.store.dispatch({type:increment,data:number})
+    //this.props.store.dispatch(actions.increment(number));
+    this.props.store.dispatch({ type: INCREMENT, data: number });
   };
   decrement = () => {
     //1.得到选择增加数量
     const number = this.numSelect.value * 1;
 
-    //2.得到原本的数据
-    const count = this.state.count;
-
-    //3.更新状态
-
-    this.setState({ count: count - number });
+    this.props.store.dispatch({ type: DECREMENT, data: number });
   };
   incrementIfOdd = () => {
     //1.得到选择增加数量
     const number = this.numSelect.value * 1;
 
     //2.得到原本的数据
-    const count = this.state.count;
+    const count = this.props.store.getState();
 
     //3.满足条件更新状态,如果state数据为奇数则进行运算
     if (count % 2 === 1) {
-      this.setState({ count: count + number });
+      this.props.store.dispatch({ type: INCREMENT, data: number });
     }
   };
   incrementIfAsync = () => {
     //1.得到选择增加数量
     const number = this.numSelect.value * 1;
 
-    //2.得到原本的数据
-    const count = this.state.count;
-
     //3.更新状态
     setTimeout(() => {
-      this.setState({ count: count + number });
+      this.props.store.dispatch({ type: INCREMENT, data: number });
     }, 1000);
   };
 
   render() {
-    const { count } = this.state;
+    //通过redux 管理中的store获取state
+    // 取值失败,要注意为什么取值失败35:00
+    // const {count} = this.props.store.getState()
+    // 取值成功
+    const count = this.props.store.getState();
+    //debugger;
     return (
       <div>
         <p>click {count} times</p>
+        {/* count没有变化是因为没有进行监听实现数据变化后渲染,需要subscribe */}
         <div>
           {/* <select ref="numSelect"> */}
           {/* 有两种处理方法，受控组件和非受控组件，此处用非受控组件处理 */}

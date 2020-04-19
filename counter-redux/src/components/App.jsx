@@ -1,26 +1,39 @@
 import React, { Component } from "react";
 //更新状态的操作交给redux,则不再写setState
 //app接收store,接收store中最新的状态
-import { INCREMENT, DECREMENT } from "../redux/action-types";
+//import { INCREMENT, DECREMENT } from "../redux/action-types";
+
+import { increment, decrement } from "../redux/actions";
+//引入这个模块里面的所有子模块
+//分别暴露
+//import * as actions from "../redux/actions";
 
 export default class App extends Component {
-  state = {
-    count: 0,
-  };
+  // state = {
+  //   count: 0,
+  // };
 
   increment = () => {
     //1.得到选择增加数量
     const number = this.numSelect.value * 1;
     //调用store的方法更新状态，因为状态的方法在Reducer里
-    // this.props.store.dispatch({type:increment,data:number})
-    //this.props.store.dispatch(actions.increment(number));
-    this.props.store.dispatch({ type: INCREMENT, data: number });
+    // this.props.store.dispatch({
+    //   type: INCREMENT,
+    //   data: number,
+    // });
+    console.log(number);
+
+    this.props.store.dispatch(increment(number));
   };
   decrement = () => {
     //1.得到选择增加数量
     const number = this.numSelect.value * 1;
 
-    this.props.store.dispatch({ type: DECREMENT, data: number });
+    // this.props.store.dispatch({
+    //   type: DECREMENT,
+    //   data: number,
+    // });
+    this.props.store.dispatch(decrement(number));
   };
   incrementIfOdd = () => {
     //1.得到选择增加数量
@@ -31,7 +44,11 @@ export default class App extends Component {
 
     //3.满足条件更新状态,如果state数据为奇数则进行运算
     if (count % 2 === 1) {
-      this.props.store.dispatch({ type: INCREMENT, data: number });
+      // this.props.store.dispatch({
+      //   type: INCREMENT,
+      //   data: number,
+      // });
+      this.props.store.dispatch(increment(number));
     }
   };
   incrementIfAsync = () => {
@@ -40,7 +57,11 @@ export default class App extends Component {
 
     //3.更新状态
     setTimeout(() => {
-      this.props.store.dispatch({ type: INCREMENT, data: number });
+      // this.props.store.dispatch({
+      //   type: INCREMENT,
+      //   data: number,
+      // });
+      this.props.store.dispatch(increment(number));
     }, 1000);
   };
 

@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import * as actions from "../redux/actions";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { increment, decrement } from "../redux/actions";
 
 //export default class App extends Component {
 class App extends Component {
-
   static propTypes = {
     count: PropTypes.number.isRequired,
     increment: PropTypes.func.isRequired,
-    decrement: PropTypes.func.isRequired
-  }
+    decrement: PropTypes.func.isRequired,
+  };
 
   increment = () => {
     const number = this.numSelect.value * 1;
@@ -18,22 +18,20 @@ class App extends Component {
     //已经不依赖redux,可以直接从store中取数据，则不依赖reduX的api
     //this.props.store.dispatch(actions.increment(number));
     this.props.increment(number);
-
   };
   decrement = () => {
     const number = this.numSelect.value * 1;
     //this.props.store.dispatch(actions.decrement(number));
     this.props.decrement(number);
-
   };
   incrementIfOdd = () => {
     const number = this.numSelect.value * 1;
-    const count = this.props.store.getState();
+    //const count = this.props.store.getState();
+    const { count } = this.props;
 
     if (count % 2 === 1) {
       //this.props.store.dispatch(actions.increment(number));
       this.props.increment(number);
-
     }
   };
   incrementIfAsync = () => {
@@ -42,13 +40,12 @@ class App extends Component {
     setTimeout(() => {
       //this.props.store.dispatch(actions.increment(number));
       this.props.increment(number);
-
     }, 1000);
   };
 
   render() {
     //const count = this.props.store.getState();
-    const {count} = this.props;
+    const { count } = this.props;
 
     //debugger;
     return (
@@ -77,7 +74,15 @@ class App extends Component {
 //传入数据。
 // const VisibleTodoList = connect(
 //   mapStateToProps,
-//   mapDispatchToProps
+//   mapDispatchToProps(action creator / action )
 // )(TodoList)
 
-export default connect()(App)
+//count名字要和app中声明的属性名一致;
+//{ increment, decrement }
+//属性名:属性值，属性名要和声明的属性名要一致。即和increment: PropTypes.func.isRequired,中相对应
+//属性值要和action声明的方法一致，实际上是action creator
+//{ increment:increment, decrement:decrement }
+//一致的名称实现编码简洁
+export default connect((state) => ({ count: state }), { increment, decrement })(
+  App
+);

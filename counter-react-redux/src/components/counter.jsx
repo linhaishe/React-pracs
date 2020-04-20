@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import * as actions from "../redux/actions";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { increment, decrement } from "../redux/actions";
+
+//import * as actions from "../redux/actions";
+//import { connect } from "react-redux";
+//import { increment, decrement } from "../redux/actions";
 
 //export default class App extends Component {
-class App extends Component {
+export default class Counter extends Component {
   static propTypes = {
     count: PropTypes.number.isRequired,
     increment: PropTypes.func.isRequired,
@@ -83,6 +84,3 @@ class App extends Component {
 //属性值要和action声明的方法一致，实际上是action creator
 //{ increment:increment, decrement:decrement }
 //一致的名称实现编码简洁
-export default connect((state) => ({ count: state }), { increment, decrement })(
-  App
-);

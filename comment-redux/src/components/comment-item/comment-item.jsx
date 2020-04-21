@@ -10,26 +10,28 @@ import { deleteComment } from "../../redux/actions";
 class CommentItem extends Component {
   static propTypes = {
     comment: PropTypes.object.isRequired,
-    deleteComment: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
+    deleteComment: PropTypes.func.isRequired,
   };
 
   deleteComment = () => {
     //const { comment, deleteComment, index } = this.props;
-    let { username } = this.props.comment;
-
+    let username = this.props.comment.username;
     //提示
     if (window.confirm(`确定删除${username}的评论吗`)) {
       //确定后删除
-      deleteComment(this.props.index);
+      this.props.deleteComment(this.props.index);
     }
   };
   render() {
-    const { comment } = this.props;
+    const comment = this.props.comment;
+    //const username = this.props.comment.username;
+    //const content = this.props.comment.content;
+
     return (
       <li className="list-group-item">
         <div className="handle">
-          <a href="#" onClick={this.deleteComment}>
+          <a href="javascript:" onClick={this.deleteComment}>
             删除
           </a>
         </div>
@@ -43,4 +45,6 @@ class CommentItem extends Component {
   }
 }
 
-export default connect(null, { deleteComment })(CommentItem);
+export default connect((state) => ({ comment: state }), { deleteComment })(
+  CommentItem
+);

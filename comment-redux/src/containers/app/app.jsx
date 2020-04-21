@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import CommentAdd from "../../components/comment-add/comment-add";
 import CommentList from "../../components/comment-list/comment-list";
 import { addComment, deleteComment } from "../../redux/actions";
+
 class App extends Component {
   //state存储的内容在store.js中，则此处不在多写
 

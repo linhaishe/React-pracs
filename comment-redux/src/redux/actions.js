@@ -1,4 +1,4 @@
-import { ADD_COMMENT, DELETE_COMMENT } from "./action-types";
+import { ADD_COMMENT, DELETE_COMMENT, RECEIVE_COMMENTS } from "./action-types";
 
 //同步添加评论
 //注意函数接收的参数，看函数被调用的时候有没有被传参数
@@ -10,3 +10,27 @@ export const deleteComment = (index) => ({
   type: DELETE_COMMENT,
   data: index,
 });
+
+const receiveComments = (comments) => ({
+  type: RECEIVE_COMMENTS,
+  data: comments,
+});
+export const getComments = () => {
+  return (dispatch) => {
+    setTimeout(() => {
+      const comments = [
+        {
+          username: "Tom",
+          content: "ReactJS好难啊!",
+          id: Date.now(),
+        },
+        {
+          username: "JACK",
+          content: "ReactJS还不错!",
+          id: Date.now() + 1,
+        },
+      ];
+      dispatch(receiveComments(comments));
+    }, 1000);
+  };
+};

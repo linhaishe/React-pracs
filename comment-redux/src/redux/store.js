@@ -1,5 +1,5 @@
 //redux最核心的管理对象store
-
+import React from "react";
 import { createStore, applyMiddleware } from "redux";
 import { comments } from "./reducers";
 

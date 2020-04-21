@@ -3,18 +3,22 @@ import PropTypes from "prop-types";
 
 export default class CommentAdd extends Component {
   static propTypes = {
-    addComment: PropTypes.func.isRequired
+    addComment: PropTypes.func.isRequired,
   };
   //先写状态，受控组件必须要有状态来接收数据
   state = {
     //数据名称最好一样,不能随便乱取名
     username: "",
-    content: ""
+    content: "",
   };
   // 使用箭头函数则不用写bind，因为它没有自己的this，它的this指向外围的组件对象
   handleSubmit = () => {
     //收集输入数据，并封装成comment对象
-    const comment = this.state;
+    // 根据输入的数据创建评论对象
+    let { username, content } = this.state;
+    let comment = { username, content };
+
+    //const comment = this.state;
     //并更新数组/状态
     //数据在哪个组件，更新数据的行为就应该定义在在哪个组件
     //添加comment方法,组件在appjs内
@@ -22,15 +26,15 @@ export default class CommentAdd extends Component {
     //清除输入数据，只需要修改状态就可以
     this.setState({
       username: "",
-      content: ""
+      content: "",
     });
   };
 
-  handleNameChange = event => {
+  handleNameChange = (event) => {
     const username = event.target.value;
     this.setState({ username });
   };
-  handleContentChange = event => {
+  handleContentChange = (event) => {
     const content = event.target.value;
     this.setState({ content });
   };

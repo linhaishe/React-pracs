@@ -15,6 +15,7 @@ export const deleteComment = (index) => ({
 //   type: RECEIVE_COMMENTS,
 //   data: comments,
 // });
+
 // export const getComments = () => {
 //   return (dispatch) => {
 //     setTimeout(() => {
@@ -34,3 +35,4 @@ export const deleteComment = (index) => ({
 //     }, 1000);
 //   };
 // };
+

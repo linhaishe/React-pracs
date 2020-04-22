@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import CommentAdd from "../../components/comment-add/comment-add";
 import CommentList from "../../components/comment-list/comment-list";
 import { addComment, deleteComment } from "../../redux/actions";
+//import {getComments} from '../../redux/actions'
+
 
 class App extends Component {
   //state存储的内容在store.js中，则此处不在多写
@@ -51,9 +53,12 @@ class App extends Component {
     comments: PropTypes.array.isRequired,
     addComment: PropTypes.func.isRequired,
     deleteComment: PropTypes.func.isRequired,
+    getComments:PropTypes.func.isRequired
   };
-  
-  componentDidMount() {}
+
+  // componentDidMount() {
+  //   this.props.getComments()
+  // }
 
 
   render() {

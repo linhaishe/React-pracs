@@ -52,6 +52,9 @@ class App extends Component {
     addComment: PropTypes.func.isRequired,
     deleteComment: PropTypes.func.isRequired,
   };
+  
+  componentDidMount() {}
+
 
   render() {
     //状态交由redux管理，取状态需从redux中获取

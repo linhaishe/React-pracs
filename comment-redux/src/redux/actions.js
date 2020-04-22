@@ -11,26 +11,26 @@ export const deleteComment = (index) => ({
   data: index,
 });
 
-const receiveComments = (comments) => ({
-  type: RECEIVE_COMMENTS,
-  data: comments,
-});
-export const getComments = () => {
-  return (dispatch) => {
-    setTimeout(() => {
-      const comments = [
-        {
-          username: "Tom",
-          content: "ReactJS好难啊!",
-          id: Date.now(),
-        },
-        {
-          username: "JACK",
-          content: "ReactJS还不错!",
-          id: Date.now() + 1,
-        },
-      ];
-      dispatch(receiveComments(comments));
-    }, 1000);
-  };
-};
+// const receiveComments = (comments) => ({
+//   type: RECEIVE_COMMENTS,
+//   data: comments,
+// });
+// export const getComments = () => {
+//   return (dispatch) => {
+//     setTimeout(() => {
+//       const comments = [
+//         {
+//           username: "Tom",
+//           content: "ReactJS好难啊!",
+//           id: Date.now(),
+//         },
+//         {
+//           username: "JACK",
+//           content: "ReactJS还不错!",
+//           id: Date.now() + 1,
+//         },
+//       ];
+//       dispatch(receiveComments(comments));
+//     }, 1000);
+//   };
+// };

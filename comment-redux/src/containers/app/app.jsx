@@ -81,8 +81,8 @@ class App extends Component {
 }
 
 export default connect(
+  //connect 链接UI组件和容器组件，数据传递，传入store,action creator
   //第一个参数是函数，写匿名函数即可，固定有一个参数state,返回的是一个对象，对象内有一个自己设置的属性名。
-  //第一种写法：state就是一个comments数组
   (state) => ({ comments: state }),
   { addComment, deleteComment }
 )(App);

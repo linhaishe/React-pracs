@@ -15,8 +15,10 @@ export default class CommentAdd extends Component {
   handleSubmit = () => {
     //收集输入数据，并封装成comment对象
     // 根据输入的数据创建评论对象
-    let { username, content } = this.state;
-    let comment = { username, content };
+    const comment = this.state;
+
+    // let { username, content } = this.state;
+    // let comment = { username, content };
 
     //const comment = this.state;
     //并更新数组/状态
@@ -34,6 +36,7 @@ export default class CommentAdd extends Component {
     const username = event.target.value;
     this.setState({ username });
   };
+  
   handleContentChange = (event) => {
     const content = event.target.value;
     this.setState({ content });

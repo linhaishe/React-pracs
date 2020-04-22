@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 //引入文件和第三方引入空格区分
 
 import "./commentItem.css";
-import { deleteComment } from "../../redux/actions";
+//import { comment, deleteComment, index } from "../../redux/actions";
 
-class CommentItem extends Component {
+export default class CommentItem extends Component {
   static propTypes = {
     comment: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
@@ -15,17 +15,17 @@ class CommentItem extends Component {
   };
 
   deleteComment = () => {
-    //const { comment, deleteComment, index } = this.props;
-    let username = this.props.comment.username;
+    const { comment, deleteComment, index } = this.props;
+    //let username = this.props.comment.username;
     //提示
-    if (window.confirm(`确定删除${username}的评论吗`)) {
+    if (window.confirm(`确定删除${comment.username}的评论吗`)) {
       //确定后删除
-      this.props.deleteComment(this.props.index);
+      deleteComment(index);
     }
   };
   render() {
-    const comment = this.props.comment;
-    //const username = this.props.comment.username;
+    const {comment} = this.props;
+    ////const username = this.props.comment.username;
     //const content = this.props.comment.content;
 
     return (
@@ -45,6 +45,6 @@ class CommentItem extends Component {
   }
 }
 
-export default connect((state) => ({ comment: state }), { deleteComment })(
-  CommentItem
-);
+// export default connect((state) => ({ comment: state }), { deleteComment })(
+//   CommentItem
+// );

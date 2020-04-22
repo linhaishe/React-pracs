@@ -10,7 +10,7 @@ export default class App extends Component {
     // ]
     comments: [],
   };
-
+//发请求，从后台获取数据，模拟发送异步AJAX请求
   componentDidMount() {
     setTimeout(() => {
       const comments = [

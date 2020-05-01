@@ -1,6 +1,6 @@
 # Building Applications with React and Flux
 
-Environment Setup
+## Environment Setup
 
 1. npx create-react-app ps-flux
 2. install flux, react router and bootstrap
@@ -41,12 +41,17 @@ Environment Setup
    - db.json:our fake database,aviods us accidentally deleting all the data and having to start over,remember each time you start the application this db.json file will be regenerated.it will protect us in case we write a bug and accidently corrupt the data or delete it all.each time we start the app, mockdata.js is copied into db.json
 
 5. create some scripts in package.json
-   we want to recreate the mock database each time we start the app,by convention,this will run before start:api because it has the same name,but prefixed with "pre" - add "prestart:api": "node tools/createMockDb.js",
-   this script will use node to call tools/apiServer.js - add "start:api": "node tools/apiServer.js",
+   we want to recreate the mock database each time we start the app,by convention,this will run before start:api because it has the same name,but prefixed with "pre"
+
+   - add "prestart:api": "node tools/createMockDb.js",
+     this script will use node to call tools/apiServer.js
+   - add "start:api": "node tools/apiServer.js",
+   - for check out whether it running or not :type `npm run start:api` on command line
+
 6. change start scripts in package.json
-   - "start": "react-scripts start",change into
-   - "start":"run-p start:dev start:api",
-   - "start:dev": "react-scripts start",
+   - `"start": "react-scripts start"`,change into
+   - `"start":"run-p start:dev start:api"`,
+   - `"start:dev": "react-scripts start"`,
 
 set it up to start the mock api each time that we start the app,rename the start script to start:dev.and create a new start script,
 
@@ -69,8 +74,38 @@ set it up to start the mock api each time that we start the app,rename the start
     - `const baseUrl = process.env.REACT_APP_API_URL + "/courses/";`
     - so our reference to process.env.react_app_api_url will be replace by create-react-app with the value of the environment variable that we just declared.
 
-前端基础：html/css/js/typescript
-前端框架：react/vue
-前端工具:webpack/sass/less
-版本管理/单元测试:git/jest
-后端:node.js/graphql
+## 02-notes
+
+### MVC
+
+MVC model: stands for modle-view-controller,react can fullfil all three,react's state handles the midel,and flux procides an alternative place to store stae outside of react.components can contain just logic,end up our operating a lot like controllers that you're used to in MVC,this pattern called controller views.
+other terms:smart/dumb components,container/presentation
+controller views promote reuse and separation of concerns
+
+## 03-notes
+
+##separation of concerns 关注点分离##
+js and html never separate,一种是标记语言，另一种是编程语言，但是要创建人和重要的程序，必须谨慎的使这两种技术保持同步。在服务端语言(java,c#)，我们拥有大量的强类型接口，这些接口是我们可以分开关注点，但是可以强制执行必须实现的通用接口。js and html 之间没有显式接口，您必须手动使这两种技术保持同步，否则应用程序会崩溃。
+
+## 04-notes
+
+### 4 ways to create components
+
+- createClass
+
+```
+var HelloWorld = React.createClass(
+   {
+      render:function(){
+         return(
+            <h1>Hello world</h1>
+         )
+      }
+   }
+)
+
+```
+
+- ES class
+- Function
+- Arrow function

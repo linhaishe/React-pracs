@@ -92,6 +92,7 @@ js and html never separate,一种是标记语言，另一种是编程语言，�
 ### 4 ways to create components
 
 - createClass
+  this style is no longer popular
 
 ```
 var HelloWorld = React.createClass(
@@ -107,5 +108,64 @@ var HelloWorld = React.createClass(
 ```
 
 - ES class
+
+```
+class HelloWorld extends React.Component{
+   constructor(props){
+      super(props);
+   }
+   render(){
+      return(
+         <h1>Hello World</h1>
+      )
+   }
+}
+
+```
+
 - Function
+
+```
+function HelloWorld(props){
+   return(
+      <h1>hello world</h1>
+   )
+}
+```
+
 - Arrow function
+  can omit the return keyword here since the right-hand side is a single expression.var keywold should avoid using
+
+```
+const HelloWorld = (props) => <h1>Hello World</h1>
+```
+
+### class vs function components
+
+1. 建议尽可能使用函数组件 function component 而不是类组件。
+2. avoid `this` keyword
+3. less transpiled code
+   功能组件比类组件更小，并且在通过 babel 运行时产生的代码更少
+4. high signal-to-noise ratio
+   最大化信噪比
+5. enhance code completion and intellisecse
+6. bloated component are obivious
+7. easy to test
+8. performance
+9. classes may be removed in the future
+
+## 05-notes
+
+### create our initial app structure
+
+the js conbention is to use PascalCase for things thsty can be instantiated
+
+react 假定 jsx 中以大写字母开头的任何元素都是 react 组件，并且 jsx 中以小写字母开头的任何元素都假定为 native html 元素
+
+### render
+
+要渲染应用程序，我们将使用 reactdom，react 支持向 react native 等其他目标呈现移动应用，但由于我们正在构建 web 应用，因此我们将使用 reactdom
+
+index.js:入口文件，entry point for our app
+
+create-react-app 配置首先查看此文件，然后查看此文件中的导入以确定构成我们应用程序的其他文件.create-react-app looks at index,=.js to determine what files are in your app

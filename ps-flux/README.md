@@ -169,3 +169,7 @@ react 假定 jsx 中以大写字母开头的任何元素都是 react 组件，�
 index.js:入口文件，entry point for our app
 
 create-react-app 配置首先查看此文件，然后查看此文件中的导入以确定构成我们应用程序的其他文件.create-react-app looks at index,=.js to determine what files are in your app
+
+## 06-notes
+
+common files:这是我们将放置在整个应用程序中使用的任何常用组件的地方

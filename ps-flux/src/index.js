@@ -6,6 +6,10 @@ import { render } from "react-dom";
 //equivalent to
 // import ReactDOM from "react-dom";
 // const render = ReactDOM.render;
-import HomePage from "./components/HomePage";
 
-render(<HomePage />, document.getElementById("root"));
+// import HomePage from "./components/HomePage";
+//import AboutPage from "./components/AboutPage";
+
+import App from "./components/App";
+
+render(<App />, document.getElementById("root"));

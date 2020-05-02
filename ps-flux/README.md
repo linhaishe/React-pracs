@@ -170,6 +170,237 @@ index.js:入口文件，entry point for our app
 
 create-react-app 配置首先查看此文件，然后查看此文件中的导入以确定构成我们应用程序的其他文件.create-react-app looks at index,=.js to determine what files are in your app
 
+common files:这是我们将放置在整个应用程序中使用的任何常用组件的地方
+
 ## 06-notes
 
-common files:这是我们将放置在整个应用程序中使用的任何常用组件的地方
+props,state,lifecycle methods and keys.
+
+### props
+
+data for a react component is held in two places,props and state.
+
+- props short for properties, data passed from parent component
+- look like html attribute
+- immutable
+- want to change? call a function provided by the parent
+
+`this.props.username` in class component
+
+```
+function Avatar(props){
+   return <img src={"images/" + props.username} />;
+}
+
+<Avatar username="cory">
+<Avatar username={username}>
+
+```
+
+### state
+
+`this.state.username` in class component
+`state.username` in function component
+
+- holds mutable state
+- set via setState in class components or useState or useReducer Hooks
+
+```
+class Example extends Component {
+   constructor(props){
+      super(props);
+      this.state={name:''};
+   }
+   onChange(event){
+      this.setState({name:event.target.value});
+   }
+
+   render(){
+      return <input onChange={this.onChange} value={this.state.name} />
+   }
+}
+```
+
+```
+class Example extends Components{
+   state = {name:""};
+
+   onchange(event){
+      this.setState({name:event.target.value})
+   }
+
+   render(){
+      return <input onChange={this.onChange} value={this.state.name} />
+   }
+}
+
+```
+
+### lifecycle
+
+these methods only exist on class components.for function components,use hooks
+
+1. constructor : initialize state bind event methods
+
+在安装组件之前调用构造函数，因此该函数是初始化状态和绑定事件方法的好地方。optional,can use class field to init state too.
+
+2. render: runs when state or props change.can return jsx ,arrays,strings,bool,or null.
+
+- in this function,you declare what your component outputs,this method is only required on class components.
+- with function components,whatever you return is assumed to be what your components should render.(on function components ,whatever you return is rendered)
+- should be pure function,shouldnt modify state or directly interact with the browser
+
+3. componentDidMount
+   组件安装后立即调用
+   runs immediately after component is mounted,by the time this function is called,the component's DOM exists.it's handy spot to access the DOM,set up subscriptions,integrate with frameworks,set timers,make HTTP calls,setState
+
+4. componentDidUpdate
+   called after updates are flushed(刷新，强制刷新，冲洗) to the DOM.it's not called o ninitial render.
+   组件更新被刷新到 DOM 上后，立即调用此函数，因此在初始渲染时不会调用。
+   this function is allows you to operate on the DOM immediately after the component has been updated and re-rendered in the DOM.
+
+5. componentWillUnmount
+   runs before component is removed from DOM
+   在从 DOM 写在组件之前运行，因此通过销毁在装入组件时创建的任何相关资源，订阅或 DOM 元素，这是一个清理的好地方。
+
+   cleanup destroy related resources.
+
+6. keys for dynamic children
+
+add key to dynamuc child elements
+在添加和删除子项时，react 使用该键来确保争取人的重新排序或者销毁子组件
+id 不需要全局唯一，它只需要对你迭代的数组保持唯一即可
+the kay is often the primary key from your database,the id only needs to be unique to the array.shouldnt change over time,shouldnt change when the page once loaded
+一个常见的错误是使用一个计数器 counter 或 map 中的 index 来分配 key，因为当删除或重新排序时索引会发生变化。
+
+```
+function Courses(){
+   return courses.map(course=>{
+      return <div key={course.id}>{course.title}</div>
+   })
+}
+```
+
+## 07-notes
+
+hooks components composition and protypes
+
+hooks 与生命周期方法类似的角色，但是 hooks 仅适用于 function components
+
+16.8,we can use functional components for almost everything via react hooks
+
+### 3 commons hooks
+
+1. useState:local state
+2. useEffect:side effect，runs immediately after each render.allows you handle side effects that need to occur each time react renders.the combination of componentDidmount and componentDidUpdate,and componentWillunmount
+3. ueseContext: access data in context
+
+```
+import React,{useState}from "react";
+function Example(){
+   const [email,setEmail]=useState("");
+   //数组解构
+   return (
+      <input
+      type="text"
+      value={email}
+      onChange={event => setEmail(event.target.value)}
+      />
+   )
+}
+```
+
+`[count]`,the second parameter is called the dependency array,we need to specify the dependencies for our effect,the effect re-runs when any values listed in the dependency array change,if you forget this,the effect will run after every render.the dependency array is where we tell useEffect when it should re-run
+
+you can run code on unmount by returning a function from useEffect
+
+```
+import React,{useState,useEffect}from "react";
+function Example(){
+   const [count,setCount] = useState(0);
+   useEffect(()=>{
+      document.title=`you clicked ${count} times`
+   },[count]);
+
+   return(
+      <div>
+      <p>you clicked {count} times</p>
+      <button onClick={()=>setCount(count+1)}>Click me</button>
+      </div>
+   )
+}
+```
+
+### components composition
+
+seperate our logic from our markup using the controller views pattern
+
+```
+function ProfilePic(props){
+   return <img src={"/image" + props.username + ".png"} />
+}
+
+function ProfileLink(props){
+   return <a href={"/profiles/" + props.username>{props.username}</a>
+}
+
+function Avatar(props){
+   return(
+      <div>
+      <ProfilePic username={props.username} />
+      < ProfileLink username={props.username} />
+      </div>
+   )
+}
+
+```
+
+### controller views
+
+is a react component that has child components.a name of top level component,a controller views controls the data flows for its child components.it does this by setting props on its child components
+
+creating separate components for logic and markup can make your components easier to maintain and reuse
+
+### props validation via proptypes
+
+### rules of hooks
+
+benefits,share logic between components
+
+only call in
+
+- react function components
+- custome hooks
+
+must be declared at the top level
+
+- dont wrap in if statement,loops,funcs
+- bcs react tracks hook call order
+
+### PropTypes
+
+PropTypes allows you to document the data and funcs that your components accepts
+
+PropTypes only run in developmemt version of react,wont run in production
+the minified react version is for production
+
+```
+CoursePage.propTypes={
+author:PropTypes.object.isRequired,
+onSave:PropTypes.func.isRequired,
+validate:PropTypes.func.isRequired,
+errors:PropTypes.object,
+hasErrors:PropTypes.func.isRequired,
+}
+```
+
+### default props
+
+default props can be declared below the component much like you declare PropTypes
+
+```
+CoursePage.defaultProps={
+   errors:{}
+}
+
+```

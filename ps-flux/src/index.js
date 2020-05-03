@@ -10,6 +10,13 @@ import { render } from "react-dom";
 // import HomePage from "./components/HomePage";
 //import AboutPage from "./components/AboutPage";
 
+import { BrowserRouter as Router } from "react-router-dom";
+//字面翻译，会讲下面出现的Router当作BrowserRouter
 import App from "./components/App";
 
-render(<App />, document.getElementById("root"));
+render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("root")
+);

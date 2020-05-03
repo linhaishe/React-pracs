@@ -404,3 +404,132 @@ CoursePage.defaultProps={
 }
 
 ```
+
+## 08-notes : reactr outer
+
+react 是一个小型的，专注的组件库，所以它对如何处理路由没有任何处理。对于小型应用程序，你可能不需要功能齐全的路由器，但随着应用程序的增长，可能希望将应用程序拆分为多个具有深度链接的页面。
+
+BrowserRouter:使用 html5 历史记录 api，拥有干净的 url，没有哈希值 hashs,推荐的使用方法
+MemoryRouter:thsi router keeps the history of your URL in memory,it doesnot read or write to the address bar,so this router can be useful for automated testing in non-browser environments like react native.
+
+### key component
+
+1. Router
+   wrap app entry point
+2. Route
+   load this component for this URL
+3. Link
+   Anchors,no post back required,不会有数据请求
+
+```
+   <Route path="/" component={HomePage} />
+   <Route path="/courses" component={CoursesPage} />
+   <Route path="/about" component={AboutPage} />
+```
+
+会看到，homepage 会在每个子页面中出现，每个子页面都有渲染到 homepage.
+因为 homepage route matches all three of the routes,noted taht we declared for the homepage just contain a slash,that's the path for the homepage,the other two path also have slash too
+
+add exact props will fixed this issue.this says 'this route should only match if the url is exactly "/" '
+
+```
+   <Route path="/" exact component={HomePage} />
+   <Route path="/courses" component={CoursesPage} />
+   <Route path="/about" component={AboutPage} />
+```
+
+#### Link component
+
+组件会创建锚点`<a></a>`,并允许您指定要连接到的路径，包括任何参数。
+target URL /user/1
+route with placeholder,占位符以冒号为前缀，冒号后面的名字可以随便取
+Route : `<Route path='/user/:userId'>`
+JSX : `<Link to="/user/1">Bobby Tables</Link>`
+anchor:`<a href="user/1">Bobby Tables</a>`
+
+clicks on the generated anchor will be handled by react router
+
+#### NavLink component
+
+此组件和 Link 组件的工作方式相同，但他接收名为 activeClassName 的额外 prop
+`<NavLink to="/users" activeClassName="active">Users</NaveLink>`
+
+### switch component
+
+404 page
+当声明的路由没有被找到的时候，我们需要将路径引导至专门设置的 404 page 页面，以便没有其他路线匹配时显示。
+
+1. **a path no route will match all route**,use switch component aviod 404 page aways play
+2. 404 route will only match if none of the other above matched,所以放在最后一行。如果前两个路由不匹配，则底部路由将最终匹配并显示 pageNotFound 组件
+3. only one route inside switch will match,所以将 notpagefound 放在列表中的最后一条路由的位置上。
+
+```
+<switch>
+<Route path="/" exact component={Home}/>
+<Route path="/anout" component={About}/>
+<Route component={PageNotFound}/>
+</switch>
+```
+
+### Redirects
+
+need to change the URL> use a redirect
+`<Redirect to="/users" />`
+
+1. 如果将其放在渲染中，组件将在它安装的那一刻重定向
+2. 如果想在一些用户行为产生后进行重定向的话，可以使用
+
+#### use state to redirect
+
+使用 state 来保存一个布尔值，确定我们是否应该重定向到用户的页面
+`{this.state.redirectToUsers && <Redirect to="users" />}`
+
+from 是您要重定向的路径，to 是你要重定向到的路径
+`<Reairect from="/old=path" to="/new-path"/>`
+
+paramas and querystring parameters are automatically passed to the new route.
+
+#### Programmatic redirect
+
+in traditional approach
+components loaded ny react router's route component recive history on props
+`props.history.push('new/path')`
+
+### URL parameters
+
+向 URL 中传递参数，router 会自动将此数据 Tina 驾到 params 和 location 下的 props
+
+```
+//given a toute like this
+<Route path="/course/:slug" component={Course}>
+
+//and a url like this,查询字符串参数的值为3
+myapp.com/course/clean-code?module=3
+
+//props will be
+function Course(props){
+   props.match.params.slug;//clean-code
+   //the qurey 包含一个对象，该对象具有与查询字符串中的简直对对应的键和值
+   props.location.qurey;//{module:3}
+   props.location.pathname;// /course/clean-code/?module=3
+   //pathname contain all the path
+}
+
+```
+
+create a new component called managecoursepage that display url parameters from react router
+
+`{props.match.params.slug}`
+
+since this page's route is loaded by react router,props.match.params will be populated by react router
+
+### page transitions
+
+当 isBlocking 为 true，提示组件将向用户显示我在此处指定的消息
+isBlocking is a value and state , 当用户在表单中键入时我们可以将其设置为 true,并且当用户提交表单时我们设置为 false
+
+```
+<Prompt when={isBlocking}
+message="Are you sure you want to navigate away?"
+/>
+```

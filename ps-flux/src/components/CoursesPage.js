@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import { getCourses } from "../api/courseApi";
 import CourseList from "./CourseList";
+import { Link } from "react-router-dom";
 
 //request a list of courses when this pages loads
 
@@ -69,6 +70,9 @@ export default function CoursesPage() {
   return (
     <div>
       <h2>Courses</h2>
+      <Link className="btn btn-primary" to="/course">
+        Add Course
+      </Link>
       <CourseList courses={courses} />
     </div>
   );

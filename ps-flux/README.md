@@ -533,3 +533,98 @@ isBlocking is a value and state , 当用户在表单中键入时我们可以将�
 message="Are you sure you want to navigate away?"
 />
 ```
+
+## 09-forms
+
+- validation
+- redirects
+- reusable inputs
+- user notifications
+- saving and population on load(节省负荷)
+
+```
+<Route path="/course/:slug" component={ManageCoursePage} />
+<Route path="/course" component={ManageCoursePage} />
+
+```
+
+in switch , the more specific route should be listed first.新路线放在 slug 路线上方，则带有该段的路线将永远不会匹配
+
+goal:create a separate component that holds the course form markup
+
+#### controlled components
+
+any <input> with a value set is a controlled components
+it's means the value is controlled by react
+element's value always matches the value of the assigned prop
+
+you must declare a change handler for keystrokers to register,如果没有输入编写更改处理程序 write a change handler for your input，then any keystroke that you nake in the input field will be lost 那么您在输入字段中所做的任何功能都会立即丢失。
+如果输入未设置 value 或将其设置为 null,则输入不受控制，因此输入将继续按照预期运行
+
+file: CourseForm.js
+todo:
+
+1. declare change handler for each input
+2. declare state
+
+`handleTitleChange(event)`
+event will be automatically passed by the browser
+
+`value={props.course.authorId}` change into `value={props.course.authorId || ""}`
+
+Warning: Failed prop type: You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
+
+set authorid an empty string if it's passed in as null
+组件初始化状态 weinull 时，使用 js 的逻辑运算渲染为空字符串
+
+`course.title=event.target.title;`
+dont treat state as immutable
+
+ManageCourse.js
+
+```
+  function handleTitleChange(event) {
+    //debugger; //查看event里的参数
+    //course.title = event.target.title; //not advise
+    //尽量不要改变state的状态，采用制作副本的形式进行处理
+    // const updatedCourse = { ...course };
+    // updatedCourse.title = event.target.title;
+    const updatedCourse = { ...course, title: event.target.value };
+    setCourse(updatedCourse);
+    //复制课程对象并将副本上的title属性赋值为用户输入的数据
+
+    //由于要处理多个input属性值，可以简化写法
+  }
+  //debugger;
+}
+```
+
+这里不是解构，是 computed property,允许根据变量设置属性
+`[event.target.title]: event.target.value`
+
+```
+  function handleChange({target}) {
+   //{target}此解构是下面的简写参数
+   //cosnt target = event.target
+   //equal to
+   //cosnt {target} = event
+    const updatedCourse = {
+      ...course,
+      [target.name]: target.value,
+    };
+    setCourse(updatedCourse);
+  }
+
+```
+
+```
+  function handleChange({target}) {
+    const updatedCourse = 
+    setCourse({
+      ...course,
+      [target.name]: target.value,
+    });
+  }
+
+```
+

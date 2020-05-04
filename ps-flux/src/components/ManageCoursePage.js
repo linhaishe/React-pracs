@@ -34,8 +34,8 @@ const ManageCoursePage = (props) => {
   function fromIsValid(){
     const _errors ={};
     if(!course.title) _errors.title="this title is required";
-    if(!course.authorId) _errors.title="this authorId is required";
-    if(!course.category) _errors.title="this category is required";
+    if(!course.authorId) _errors.authorId="this authorId is required";
+    if(!course.category) _errors.category="this category is required";
     //如果任何字段都没有值,相应的设置本地错误对象
     setErrors(_errors);
     return Object.keys(_errors).length ===0;

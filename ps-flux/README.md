@@ -619,7 +619,7 @@ ManageCourse.js
 
 ```
   function handleChange({target}) {
-    const updatedCourse = 
+    const updatedCourse =
     setCourse({
       ...course,
       [target.name]: target.value,
@@ -628,3 +628,15 @@ ManageCourse.js
 
 ```
 
+### dupulication
+
+1. keep label and input in stnc
+2. set calssName
+3. declare value
+
+goal: create a reusable textinput component
+
+exercise: create a reusable selet too
+
+### 安装插件
+**npm install react-toastify@5.1.1**

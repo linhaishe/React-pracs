@@ -1,15 +1,16 @@
 //this app component will decide which page to render
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-//import { ToastContainer } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
+import React from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
-import HomePage from "./HomePage";
-import AboutPage from "./AboutPage";
-import Header from "./common/Header";
-import CoursesPage from "./CoursesPage";
-import PageNotFound from "./PageNotFound";
-import ManageCoursePage from "./ManageCoursePage";
+import HomePage from './HomePage'
+import AboutPage from './AboutPage'
+import Header from './common/Header'
+import CoursesPage from './CoursesPage'
+import PageNotFound from './PageNotFound'
+import ManageCoursePage from './ManageCoursePage'
+
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 //window.location is built into all browsers
 //App 只显示每个URL的正确页面
@@ -23,7 +24,7 @@ function App() {
   //   }
   return (
     <div className="container-fluid">
-      {/* <ToastContainer autoClose={3000} hideProgressBar /> */}
+      <ToastContainer autoClose={3000} hideProgressBar />
       <Header />
       <Switch>
         <Route path="/" exact component={HomePage} />
@@ -38,7 +39,7 @@ function App() {
       {/* return getPage()
       {getPage()} */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

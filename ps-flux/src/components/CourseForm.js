@@ -1,5 +1,6 @@
 import React from "react";
 import TextInput from "./common/TextInput";
+import PropTypes from "prop-types";
 
 function CourseForm(props) {
   return (
@@ -24,6 +25,8 @@ function CourseForm(props) {
         name="title"
         onChange={props.onChange}
         value={props.course.title}
+        //since error is an object,it's easy to reference the relevant value for each input
+        error={props.errors.title}
       />
 
       <div className="form-group">
@@ -41,6 +44,10 @@ function CourseForm(props) {
             <option value="2">Scott Allen</option>
           </select>
         </div>
+        {props.errors.authorId && (
+          <div className="alert alert-danger">{props.errors.authorId}</div>
+        )}
+
       </div>
 
       {/* <div className="form-group">
@@ -63,11 +70,20 @@ function CourseForm(props) {
         label="category"
         onChange={props.onChange}
         value={props.course.category}
+        error={props.errors.category}
+
       />
 
       <input type="submit" value="Save" className="btn btn-primary" />
     </form>
   );
 }
+//声明ptoptype，以便其他开发人员清楚地知道需要输入的数据类型
+CourseForm.propTypes = {
+  course: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+};
 
 export default CourseForm;

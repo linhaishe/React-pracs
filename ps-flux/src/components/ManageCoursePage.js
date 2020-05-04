@@ -1,7 +1,7 @@
 //create a new component called managecoursepage that display url parameters from react router
 
 //use react router to display a value from the url
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Prompt } from "react-router-dom";
 import CourseForm from "./CourseForm";
 import * as courseApi from "../api/courseApi";
@@ -17,6 +17,13 @@ const ManageCoursePage = (props) => {
     authorId: null,
     category: "",
   });
+
+  useEffect(() => {
+    const slug = props.match.params.slug; // from the path `/courses/:slug`
+    if (slug) {
+      courseApi.getCourseBySlug(slug).then(_course => setCourse(_course));
+    }
+  }, [props.match.params.slug]);
 
   function handleChange(event) {
     //由于要处理多个input属性值，可以简化写法

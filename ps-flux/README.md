@@ -640,3 +640,5 @@ exercise: create a reusable selet too
 
 ### 安装插件
 **npm install react-toastify@5.1.1**
+
+功能点：点击已有课程时，表单会自动填充

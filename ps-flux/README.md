@@ -642,3 +642,32 @@ exercise: create a reusable selet too
 **npm install react-toastify@5.1.1**
 
 功能点：点击已有课程时，表单会自动填充
+
+## 10-notes Flux
+
+handle data flows throughout our app using flux
+- actions: encapsluate events,封装事件
+- stores: hold app state,保持应用状态
+- dispatcher: central hub,中央枢纽
+
+flux 是 facebook 的一个架构模式的名称，它具有单向数据流和集中式调度程序。
+
+其他相同的架构模式,many flux implementations.
+redux is most popular
+fluxxor,deloream,nuclearjs,fluxible,redux,marty,flummox,reflux,alt
+单向数据流动，但是只是意味着数据在一个方向上流动。
+
+constants,创建常量文件方便数据处理
+
+avoid nesting controller views,which can hurt performance,it ca cause multiple data updates and cause react's render method to get called multiple times.
+
+recommand having a single top-level controller view per page or a single controller view for each major portion of the page.this means all child component simply receive data from the parent via props,it keeps them dumb and focused solely on presentation
+
+so flux is a publish-subscribe model?
+
+not quite
+- differs in two ways:
+1. every payload is dispatched to all regidtered callbacks.
+2. callbacks can wait for other callbacks
+
+## 11-notes flux demo

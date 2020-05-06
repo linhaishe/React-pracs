@@ -30,6 +30,7 @@ class CourseStore extends EventEmitter {
   }
 
   getCoursesBySlug(slug) {
+    //predicate: a function that returns a boolean
     return _courses.find((course) => course.slug === slug);
   }
 }

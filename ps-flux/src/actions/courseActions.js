@@ -1,6 +1,6 @@
 //注意到文件名开头小写，因为这不是组件，里面不会包含对象
 
-import dispatcher from "../components/appDispatcher";
+import dispatcher from "../appDispatcher";
 import * as courseApi from "../api/courseApi";
 import actionType from "./actionTypes";
 //plain function

@@ -4,7 +4,9 @@
 import React, { useState ,useEffect} from "react";
 import { Prompt } from "react-router-dom";
 import CourseForm from "./CourseForm";
-import * as courseApi from "../api/courseApi";
+//后面使用flux store储存所有课程信息，不再从courseapi中获取信息，注释掉
+//import * as courseApi from "../api/courseApi";
+import { courseStore } from "../stores/courseStore";
 import { toast } from "react-toastify";
 //从route中取值的话需要传props参数
 const ManageCoursePage = (props) => {

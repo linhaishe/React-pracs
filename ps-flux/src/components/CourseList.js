@@ -18,6 +18,14 @@ export default function CourseList(props) {
           return (
             <tr key={course.id}>
               <td>
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => props.deleteCourse(course.id)}
+                >
+                  Delete
+                </button>
+              </td>
+              <td>
                 <Link to={"/course/" + course.slug}>{course.title}</Link>
               </td>
               <td>{course.authorId}</td>
@@ -43,6 +51,7 @@ export default function CourseList(props) {
 
 //每个数组里的对象的统一格式,each object in these array muasy have these properties
 CourseList.propTypes = {
+  deleteCourse: PropTypes.func.isRequired,
   courses: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,

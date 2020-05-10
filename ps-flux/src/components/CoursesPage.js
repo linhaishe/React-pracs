@@ -1,7 +1,10 @@
 import React, { Component, useState, useEffect } from "react";
-import { getCourses } from "../api/courseApi";
+//import { getCourses } from "../api/courseApi";
+//取代api使用store
+import courseStore from "../stores/courseStore";
 import CourseList from "./CourseList";
 import { Link } from "react-router-dom";
+import { loadCourses, deleteCourse } from "../actions/courseActions";
 
 //request a list of courses when this pages loads
 
@@ -62,18 +65,33 @@ import { Link } from "react-router-dom";
 //refactoring with hooks
 
 export default function CoursesPage() {
-  const [courses, setCourses] = useState([]);
+  // const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState(courseStore.getCourses());
+
   useEffect(() => {
     //naming collision
-    getCourses().then((_courses) => setCourses(_courses));
+    // getCourses().then((_courses) => setCourses(_courses));
+    // setCourses(courseStore.getCourses());
+    courseStore.addChangeListener(onChange);
+    if (courseStore.getCourses().length === 0) loadCourses();
+    //since our component is conneted the flus store shen courses are added to the store,onChange will be called
+    return () => courseStore.removeChangeListener(onChange);
+    //cleanup on unmount
+    // with useEffect you declare the code to run on unmount by returning a function
+    // when you add an event listner on mount,you should also clean it up when the component unmount
   }, []);
+
+  function onChange() {
+    //when the courseStore changes we want to get the list of courses and update state
+    setCourses(courseStore.getCourses());
+  }
   return (
     <div>
       <h2>Courses</h2>
       <Link className="btn btn-primary" to="/course">
         Add Course
       </Link>
-      <CourseList courses={courses} />
+      <CourseList courses={courses} deleteCourse={deleteCourse} />
     </div>
   );
 }

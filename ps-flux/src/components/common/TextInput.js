@@ -11,7 +11,7 @@ export default function TextInput(props) {
 
   //在最底下声明了默认error，我么不再需要检查是否props.error是否存在，因为我们知道他将会存在
   if (props.error.length > 0) {
-    wrapperClass += " has-erroe";
+    wrapperClass += " has-error";
   }
 
   return (

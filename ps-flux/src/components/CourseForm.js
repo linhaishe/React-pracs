@@ -21,7 +21,7 @@ function CourseForm(props) {
 
       <TextInput
         id="title"
-        label="text"
+        label="Title"
         name="title"
         onChange={props.onChange}
         value={props.course.title}
@@ -47,7 +47,6 @@ function CourseForm(props) {
         {props.errors.authorId && (
           <div className="alert alert-danger">{props.errors.authorId}</div>
         )}
-
       </div>
 
       {/* <div className="form-group">
@@ -67,11 +66,10 @@ function CourseForm(props) {
       <TextInput
         id="category"
         name="category"
-        label="category"
+        label="Category"
         onChange={props.onChange}
         value={props.course.category}
         error={props.errors.category}
-
       />
 
       <input type="submit" value="Save" className="btn btn-primary" />
@@ -83,7 +81,7 @@ CourseForm.propTypes = {
   course: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
 };
 
 export default CourseForm;

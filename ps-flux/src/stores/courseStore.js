@@ -5,12 +5,13 @@ import { EventEmitter } from "events";
 import Dispatcher from "../appDispatcher";
 //Dispatcher registration is typically defined below the store,since it's not part of the store's public api
 
-import actionType from "../actions/actionTypes";
+import actionTypes from "../actions/actionTypes";
 
 //declare a const for aviod typo
 const CHANGE_EVENT = "change";
 //强制private,it's means that no one can mess with th edata in the store unless they interact via the public api
-const _courses = [];
+let _courses = [];
+//用const _courses = []会出错
 class CourseStore extends EventEmitter {
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
@@ -31,25 +32,41 @@ class CourseStore extends EventEmitter {
     return _courses;
   }
 
-  getCoursesBySlug(slug) {
+  getCourseBySlug(slug) {
     //predicate: a function that returns a boolean
     return _courses.find((course) => course.slug === slug);
   }
 
-  //getCourses(),getCoursesBySlug(slug),like a database table,they hold data,these funtions are a bit like a view
+  //getCourses(),getCourseBySlug(slug),like a database table,they hold data,these funtions are a bit like a view
 }
 
 //create an instance of the store class
 const store = new CourseStore();
-
+//this code will store a new course within our store's private courses variable
 Dispatcher.register((action) => {
   //this will be called anytime an action is dispatched
   //every store is notified of every action
   switch (action.actionType) {
+    case actionTypes.DELETE_COURSE:
+      _courses = _courses.filter(
+        (course) => course.id !== parseInt(action.id, 10)
+      );
+      store.emitChange();
+      break;
     //当action creater 发生后，将课程添加到_course数组中
-    case actionType.CREATE_COURSE:
+    case actionTypes.CREATE_COURSE:
       _courses.push(action.course);
       //anytime the store canges,we need to call emitchange
+      store.emitChange();
+      break;
+    case actionTypes.UPDATE_COURSE:
+      _courses = _courses.map((course) =>
+        course.id === action.course.id ? action.course : course
+      );
+      store.emitChange();
+      break;
+    case actionTypes.LOAD_COURSES:
+      _courses = action.courses;
       store.emitChange();
       break;
     default:

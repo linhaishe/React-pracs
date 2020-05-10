@@ -639,6 +639,7 @@ goal: create a reusable textinput component
 exercise: create a reusable selet too
 
 ### 安装插件
+
 **npm install react-toastify@5.1.1**
 
 功能点：点击已有课程时，表单会自动填充
@@ -646,6 +647,7 @@ exercise: create a reusable selet too
 ## 10-notes Flux
 
 handle data flows throughout our app using flux
+
 - actions: encapsluate events,封装事件
 - stores: hold app state,保持应用状态
 - dispatcher: central hub,中央枢纽
@@ -666,8 +668,25 @@ recommand having a single top-level controller view per page or a single control
 so flux is a publish-subscribe model?
 
 not quite
+
 - differs in two ways:
+
 1. every payload is dispatched to all regidtered callbacks.
 2. callbacks can wait for other callbacks
 
 ## 11-notes flux demo
+
+when should we load courses?
+
+1. when needed
+   缺点：需要检查是否每个需要课程数据的页面上加载了课程
+2. when app loads
+   如果你的应用程序在许多页面上使用相同的数据，那么最好在应用程序加载时加载数据，而不管页面如何
+
+goal:
+
+1. subscribe to flux store
+2. if courses have not been loaded,call loadCourses function
+
+problem:
+the ManageCoursePage needs to assure the Flux store is populated before requesting a course by slug

@@ -690,3 +690,11 @@ goal:
 
 problem:
 the ManageCoursePage needs to assure the Flux store is populated before requesting a course by slug
+
+# challenges
+
+1. show 404 page for bogus slug
+2. display author name on CoursesPage
+3. populate author dropdown via api data
+4. create a reusable dropdown component
+5. add author management

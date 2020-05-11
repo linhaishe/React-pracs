@@ -261,7 +261,7 @@ these methods only exist on class components.for function components,use hooks
 
 5. componentWillUnmount
    runs before component is removed from DOM
-   在从 DOM 写在组件之前运行，因此通过销毁在装入组件时创建的任何相关资源，订阅或 DOM 元素，这是一个清理的好地方。
+   在从 DOM 写在组件之前运行，因此通过销毁在装入组件时创建的任何相关资源，订阅或 取消订阅DOM 元素，这是一个清理的好地方。
 
    cleanup destroy related resources.
 

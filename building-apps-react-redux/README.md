@@ -68,3 +68,83 @@
 | webpack-bundle-analyzer         | Generate report of what's in the app's production bundle         |
 | webpack-cli                     | Run Webpack via the command line                                 |
 | webpack-dev-server              | Serve app via Webpack                                            |
+
+# 03-notes
+
+Webpack is configured via a JavaScript object, and typically the config file is called webpack.config.js, and it's placed in the project root.
+
+use the CommonJS syntax here since we're working in Node.Node still lacks support for ES modules,
+
+```
+   "babel":{
+     "preset":[
+       "babel=preset-react-app"
+     ]
+
+ }
+}
+```
+
+Babel can be configured via a .babelrc file, but I prefer configuring it via package.json.
+
+This single preset will tell Babel to transpile our JSX, and it will also allow us to safely use a long list of modern JavaScript features, including object spread, class properties, dynamic imports, and much more.
+
+Now, this is the same Babel preset that's used by create‑react‑app, so you can dig into their preset if you're curious about all the details on how this configures Babel. In short, just understand that this one preset means that we can use modern JavaScript and a number of experimental features too, but our code will run in all recent browsers because Babel will convert it into a form that all recent browsers can understand.
+
+```
+"start": "webpack-dev-server --config webpack.config.dev.js --port 3000"
+```
+
+This key that we declare will determine how we call it on the command line. What we want to call is webpack‑dev‑server, and we're going to tell it where to find our configuration, which is the webpack.config.dev.js that we created in a previous clip. Finally, I'm going to configure it to run on port 3000.
+
+```
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
+```
+
+this enables many recommended rules
+
+```
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+```
+
+```
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+```
+
+```
+    "rules": {
+      "no-debugger": "off",
+      "no-console": "off",
+      "no-unused-vars": "warn",
+      "react/prop-types": "warn"
+    },
+```
+
+```
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "root": true
+  }
+}
+```

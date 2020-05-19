@@ -55,7 +55,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         //不需要这个文件
         exclude: /node_modules/,
-        //我们希望在尚未配置的这些文件上运行Babel，我们将在下一个剪辑中进行操作。但是要在这些文件上运行Babel，我们将调用babel-loader。
+        //我们希望在尚未配置的这些文件上运行Babel，我们将在下一个剪辑中进行操作。但是要在这些文件上运行Babel，我们将调用babel-loader。webpack will watch our files,recompile our code,and run eslint when we hit save,this rules are processed from the bottom up,so this ealint rules will run first
         use: ["babel-loader", "eslint-loader"],
       },
       {

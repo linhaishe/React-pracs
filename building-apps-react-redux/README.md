@@ -120,6 +120,8 @@ this enables many recommended rules
     },
 ```
 
+these environments have global variables. this tells eslint to ignore those globals
+
 ```
     "env": {
       "browser": true,
@@ -129,6 +131,8 @@ this enables many recommended rules
     },
 ```
 
+overriding default rules.Then, under rules, I override a few of the recommended defaults. I'm going to use the debugger keyword and console.log frequently in this course, so this will avoid annoying ESLint warnings. Unlike errors, warnings just display a message instead of blocking progress via a build error.
+
 ```
     "rules": {
       "no-debugger": "off",
@@ -137,6 +141,8 @@ this enables many recommended rules
       "react/prop-types": "warn"
     },
 ```
+
+this setting is required by eslint‑plugin‑react. We're telling it to detect the version of React that we're using. Otherwise, it will throw a React version not specified error.
 
 ```
     "settings": {
@@ -148,3 +154,82 @@ this enables many recommended rules
   }
 }
 ```
+
+this assures only this eslint config applies to this project.this final setting declares that this is the root ESLint config for this project. This way, if you're already using ESLint and you have ESLint config in your user folder, it won't apply to this project. So this setting will avoid my linting rules conflicting with yours.
+
+```
+"root": true
+```
+
+dev environment complete
+
+- transpile:babel
+- bundle:webpack
+- lint:eslint
+- webserver:webpack
+- generating:index.html,webpack
+- loading changes on save : webpack
+- one command via npm script
+
+# react component approaches
+
+## two goals
+
+- react component creation approaches
+- container vs presentatinonal components 容器组件和展示组件
+
+## four ways to create components
+
+- create class
+- es class
+- function
+- arrow function
+
+```
+var HelloWorld = React.createClass({
+  render:function(){
+    return(
+      <h1>hello world</h1>
+    )
+  }
+})
+```
+
+```
+class HelloWorld extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return(
+      <h1>hello world</h1>
+    )
+  }
+}
+```
+
+```
+function HelloWorld(props){
+  return(
+    <h1>hello world</h1>
+  )
+}
+```
+
+```
+const HelloWorld =(props) => <h1>hello world</h1>
+```
+
+## functionnal components benefits
+
+pics in desktop
+
+## container vs presentation components
+
+pics in desktop
+
+## common folder
+
+keep components that aren't tied to a specific page in a folder called common. So let's create a common folder under components.
+
+like navigator

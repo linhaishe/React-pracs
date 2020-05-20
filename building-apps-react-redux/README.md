@@ -233,3 +233,102 @@ pics in desktop
 keep components that aren't tied to a specific page in a folder called common. So let's create a common folder under components.
 
 like navigator
+
+# 09-notes
+
+在输入框中不能输入文字，是因为 our method is inheriting the 'this' context of the caller,which in the case is the change handler,we need to bind the this context to our instance
+
+`onChange={this.handleChange.bind(this)}`
+
+this isnt ideal slice a new fucntion is allocated on every render
+
+`this.handleChange = this.handleChange.bind(this)`
+now the function is only bound once
+
+```
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      course: {
+        title: "",
+      },
+    };
+  }
+```
+
+```
+  state = {
+    course: {
+      title: "",
+    },
+  };
+```
+
+```
+<input type="submit" value="Save" />
+```
+
+不建议将 onsubmit 功能放在此 value 附近，that's not recommended for accessibility and usability reasons. Why? Well, because users should be able to submit a form by hitting the Enter key. With this onSubmit handler up here, the inner key will also submit our form.
+
+by attaching an onsubmit handler to the form , both the submit button and the enter key will submit the form
+
+the left and right-hand side match = object shorthand syntax
+
+`this.setState({ course });`
+`this.setState({ course:course });`
+
+```
+default:
+  return state;
+```
+
+if the reducdr receives an action that it doesnot care about,it should return the unchange state
+
+Provider is a higher‑order component that provides your Redux store data to child components.
+
+```
+import { Provider as ReduxProvider } from "react-redux";
+
+  <ReduxProvider sotre={store}>
+    <Router>
+      <App />
+    </Router>
+  </ReduxProvider>,
+
+```
+
+```
+
+function mapStateToProps(state, ownProps) {
+return {
+courses: state.courses,
+};
+}
+
+function mapDispatchToProps() {}
+```
+
+mapStateToProps function determaines what state in passed is passed to our components via props
+
+`courses: state.courses`
+be specific,request only the data your component needs,if you expose the entire Redux store, then the component will rerender when any data changes in the Redux store, and that's not good.
+
+`ownProps`
+This parameter lets us access props that are being attached to this component. That's why it's called ownProps because it's a reference to the component's ownProps.
+
+`mapDispatchToProps`
+This argument lets us decide what actions we want to expose on our component. This is an optional parameter,
+
+when we omit mapDispatchToProps.our components gets a dispatch prop injected automatically
+
+```
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.dispatch(courseActions.createCourse(this.state.course));
+    //alert(this.state.course.title);
+  };
+
+```
+
+you have to dispatch an action,if you just call an action creator it wont do anything ,action creators just return an object,you need to wrap it in dispatch function

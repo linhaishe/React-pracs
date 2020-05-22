@@ -42,6 +42,9 @@ module.exports = {
   },
   //tell the plugin where to find our HTML and  favicon template, which is in the src directory
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env.API_URL": JSON.stringify("http://localhost:3001")
+    }),
     new HtmlWebpackPlugin({
       template: "src/index.html",
       favicon: "src/favicon.ico",

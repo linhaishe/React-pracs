@@ -1,10 +1,28 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
+import * as authorActions from "../../redux/actions/authorActions";
 import { PropTypes } from "prop-types";
 import { bindActionCreators } from "redux";
+import CourseList from "./CourseList";
 
 class CoursesPage extends Component {
+  //const {courses,authors,actions} = this.props
+  //可以用解构自己替代换一下哈
+  componentDidMount() {
+    //we only request authors and courses once,so use if statement
+    if (this.props.courses.length === 0) {
+      this.props.actions.loadCourses().catch((error) => {
+        alert("loading courses failed" + error);
+      });
+    }
+
+    if (this.props.authors.length === 0) {
+      this.props.actions.loadAuthors().catch((error) => {
+        alert("loading authors failed" + error);
+      });
+    }
+  }
   // constructor(props) {
   //   super(props);
 
@@ -59,14 +77,17 @@ class CoursesPage extends Component {
       // </form>
       <div>
         <h2>Courses</h2>
-        {this.props.courses.map((course) => (<div key={course.title}>{course.title}</div>))}
+        {/* {this.props.courses.map((course) => (
+          <div key={course.title}>{course.title}</div>
+        ))} */}
+        <CourseList courses={this.props.courses} />
       </div>
-
     );
   }
 }
 
 CoursesPage.propTypes = {
+  authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
   // createCourse: PropTypes.func.isRequired,
   actions: PropTypes.object.isRequired,
@@ -76,7 +97,19 @@ CoursesPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    courses: state.courses,
+    // courses: state.courses,
+    //add author's name to each course
+    courses:
+      state.authors.length === 0
+        ? []
+        : state.courses.map((course) => {
+            return {
+              ...course,
+              authorName: state.authors.find((a) => a.id === course.authorId)
+                .name,
+            };
+          }),
+    authors: state.authors,
   };
 }
 
@@ -85,8 +118,13 @@ function mapDispatchToProps(dispatch) {
     // createCourse: (course) => dispatch(courseActions.createCourse(course)),
 
     // createCourse: bindActionCreators(courseActions, dispatch),
+    // actions: bindActionCreators(courseActions, dispatch)
 
-    actions: bindActionCreators(courseActions, dispatch),
+    actions: {
+      loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
+      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
+      actions: bindActionCreators(courseActions, dispatch),
+    },
   };
 }
 

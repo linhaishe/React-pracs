@@ -332,3 +332,29 @@ when we omit mapDispatchToProps.our components gets a dispatch prop injected aut
 ```
 
 you have to dispatch an action,if you just call an action creator it wont do anything ,action creators just return an object,you need to wrap it in dispatch function
+
+options for when to load courses
+
+1. when app loads(wasteful)
+2. when course page is loaded(efficient)
+
+```
+  componentDidMount() {
+    this.props.actions.loadCourses().catch((error) => {
+      alert("loading courses failed" + error);
+    });
+  }
+```
+
+这里为什么是 actions?
+
+here:
+
+```
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(courseActions, dispatch),
+  };
+}
+
+```

@@ -15,47 +15,53 @@ class CoursesPage extends Component {
   //   };
   // }
 
-  state = {
-    course: {
-      title: "",
-    },
-  };
+  //we will use mangagepage to manage our courses,so we will deleted below code
+  // state = {
+  //   course: {
+  //     title: "",
+  //   },
+  // };
 
-  handleChange = (event) => {
-    const course = { ...this.state.course, title: event.target.value };
-    this.setState({ course });
-  };
+  // handleChange = (event) => {
+  //   const course = { ...this.state.course, title: event.target.value };
+  //   this.setState({ course });
+  // };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // this.props.dispatch(courseActions.createCourse(this.state.course));
-    // this.props.createCourse(this.state.course);
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   // this.props.dispatch(courseActions.createCourse(this.state.course));
+  //   // this.props.createCourse(this.state.course);
 
-    this.props.actions.createCourse(this.state.course);
+  //   this.props.actions.createCourse(this.state.course);
 
-    //we dont need to call dispatch since thats being handled in mapDispatchToProps
+  //   //we dont need to call dispatch since thats being handled in mapDispatchToProps
 
-    //alert(this.state.course.title);
-  };
+  //   //alert(this.state.course.title);
+  // };
 
   //匿名函数的this指向，和plain function 指向会导致功能性失败
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h2>Courses</h2>
-        <h3>Add Course</h3>
-        <input
-          type="text"
-          onChange={this.handleChange}
-          value={this.state.course.title}
-        />
+      // <form onSubmit={this.handleSubmit}>
+      //   <h2>Courses</h2>
+      //   <h3>Add Course</h3>
+      //   <input
+      //     type="text"
+      //     onChange={this.handleChange}
+      //     value={this.state.course.title}
+      //   />
 
-        <input type="submit" value="Save" />
-        {this.props.courses.map((course) => (
-          <div key={course.title}>{course.title}</div>
-        ))}
-      </form>
+      //   <input type="submit" value="Save" />
+      //   {this.props.courses.map((course) => (
+      //     <div key={course.title}>{course.title}</div>
+      //   ))}
+      // </form>
+      <div>
+        <h2>Courses</h2>
+        {this.props.courses.map((course) => (<div key={course.title}>{course.title}</div>))}
+      </div>
+
     );
   }
 }

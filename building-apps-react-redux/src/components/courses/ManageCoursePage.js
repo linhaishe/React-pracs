@@ -1,8 +1,10 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
 import { PropTypes } from "prop-types";
+import { newCourse } from "../../../tools/mockData";
+import CourseForm from "./CourseForm";
 
 //we are going to want to load our course and author data
 // class ManageCoursePage extends Component {
@@ -32,8 +34,17 @@ import { PropTypes } from "prop-types";
 //   }
 // }
 
-function ManageCoursePage({courses,authors,loadCourses,loadAuthors}) {
-useEffect(()=>{
+//aviod using redux for all state,use plain react state for data only one,few components use (such as form state)
+//plain react state remains useful for local state,use redux for more global values
+//to choose redux vs local state,ask"who cares about this data,if only a few closely related components use the data,prefer plain react state
+
+function ManageCoursePage({courses,authors,loadCourses,loadAuthors,...props}) {
+const [course,setCourse]=useState({...props.course});
+//initialize errors to an empty object
+const [errors,setErrors]=useState({});
+
+
+  useEffect(()=>{
   
       if (courses.length === 0) {
           loadCourses().catch((error) => {
@@ -51,7 +62,8 @@ useEffect(()=>{
   
       return (
         <div>
-          <h2>Manage Course</h2>
+          <CourseForm course={course} errors={errors} authors={authors}/>
+          
         </div>
       );
 
@@ -59,6 +71,7 @@ useEffect(()=>{
   
 
 ManageCoursePage.propTypes = {
+  course:PropTypes.object.isRequired,
     authors: PropTypes.array.isRequired,
     courses: PropTypes.array.isRequired,
     loadCourses: PropTypes.func.isRequired,
@@ -69,6 +82,7 @@ ManageCoursePage.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    course:newCourse,
     courses: state.courses,
     authors: state.authors,
   };

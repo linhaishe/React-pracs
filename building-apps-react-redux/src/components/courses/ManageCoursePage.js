@@ -1,36 +1,62 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
 import { PropTypes } from "prop-types";
 
 //we are going to want to load our course and author data
-class ManageCoursePage extends Component {
-  componentDidMount() {
-    const {courses,authors,loadCourses,loadAuthors} = this.props
-    //可以用解构自己替代换一下哈
+// class ManageCoursePage extends Component {
+//   componentDidMount() {
+//     const {courses,authors,loadCourses,loadAuthors} = this.props
+//     //可以用解构自己替代换一下哈
 
-    if (courses.length === 0) {
-        loadCourses().catch((error) => {
-        alert("loading courses failed" + error);
-      });
-    }
+//     if (courses.length === 0) {
+//         loadCourses().catch((error) => {
+//         alert("loading courses failed" + error);
+//       });
+//     }
 
-    if (authors.length === 0) {
-        loadAuthors().catch((error) => {
-        alert("loading authors failed" + error);
-      });
-    }
+//     if (authors.length === 0) {
+//         loadAuthors().catch((error) => {
+//         alert("loading authors failed" + error);
+//       });
+//     }
+//   }
+
+//   render() {
+//     return (
+//       <div>
+//         <h2>Manage Course</h2>
+//       </div>
+//     );
+//   }
+// }
+
+function ManageCoursePage({courses,authors,loadCourses,loadAuthors}) {
+useEffect(()=>{
+  
+      if (courses.length === 0) {
+          loadCourses().catch((error) => {
+          alert("loading courses failed" + error);
+        });
+      }
+  
+      if (authors.length === 0) {
+          loadAuthors().catch((error) => {
+          alert("loading authors failed" + error);
+        });
+      }
+    },[])
+    //the empty array as a second argument to effect means the effect will run once when the component mounts
+  
+      return (
+        <div>
+          <h2>Manage Course</h2>
+        </div>
+      );
+
   }
-
-  render() {
-    return (
-      <div>
-        <h2>Manage Course</h2>
-      </div>
-    );
-  }
-}
+  
 
 ManageCoursePage.propTypes = {
     authors: PropTypes.array.isRequired,

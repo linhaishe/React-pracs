@@ -358,3 +358,72 @@ function mapDispatchToProps(dispatch) {
 }
 
 ```
+```
+import * as courseActions from "../../redux/actions/courseActions";
+import * as authorActions from "../../redux/actions/authorActions";
+
+const {courses,authors,actions} = this.props
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
+      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
+      actions: bindActionCreators(courseActions, dispatch),
+    },
+  };
+}
+
+ManageCoursePage.propTypes = {
+  authors: PropTypes.array.isRequired,
+  courses: PropTypes.array.isRequired,
+  // createCourse: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
+};
+```
+if we declare mapDispatchtoprops as an object instead,each property will automatically be bound to disptch.handy.
+```
+import * as courseActions from "../../redux/actions/courseActions";
+import * as authorActions from "../../redux/actions/authorActions";
+
+const {courses,authors,loadCourses,loadAuthors} = this.props
+
+const mapDispatchToProps = {
+  loadCourses: courseActions.loadCourses,
+  loadAuthors: authorActions.loadAuthors,
+};
+
+ManageCoursePage.propTypes = {
+  authors: PropTypes.array.isRequired,
+  courses: PropTypes.array.isRequired,
+  loadCourses: PropTypes.func.isRequired,
+  loadAuthors: PropTypes.func.isRequired,
+};
+
+```
+```
+import {loadCourses} from "../../redux/actions/courseActions";
+import {loadAuthors} from "../../redux/actions/authorActions";
+
+const {courses,authors,loadCourses,loadAuthors} = this.props
+
+const mapDispatchToProps = {
+  loadCourses: courseActions.loadCourses,
+  loadAuthors: authorActions.loadAuthors,
+};
+
+ManageCoursePage.propTypes = {
+  authors: PropTypes.array.isRequired,
+  courses: PropTypes.array.isRequired,
+  loadCourses: PropTypes.func.isRequired,
+  loadAuthors: PropTypes.func.isRequired,
+};
+
+```
+
+```
+<Route path="/course/:slug" component={ManageCoursesPage} />
+<Route path="/course/" component={ManageCoursesPage} />
+```
+
+since only one route in switch can match ,we need to declare this more specific route first,the shorter course url would match our slug road wuold never load

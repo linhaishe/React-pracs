@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
+
 import { PropTypes } from "prop-types";
 import { newCourse } from "../../../tools/mockData";
 import CourseForm from "./CourseForm";
@@ -38,8 +39,8 @@ import CourseForm from "./CourseForm";
 //plain react state remains useful for local state,use redux for more global values
 //to choose redux vs local state,ask"who cares about this data,if only a few closely related components use the data,prefer plain react state
 
+
 function ManageCoursePage({courses,authors,loadCourses,loadAuthors,saveCourse,...props}) {
-  function ManageCoursePage({courses,authors,loadCourses,loadAuthors,...props}) {
 const [course,setCourse]=useState({...props.course});
 //initialize errors to an empty object
 const [errors,setErrors]=useState({});

@@ -39,84 +39,108 @@ import CourseForm from "./CourseForm";
 //plain react state remains useful for local state,use redux for more global values
 //to choose redux vs local state,ask"who cares about this data,if only a few closely related components use the data,prefer plain react state
 
+function ManageCoursePage({
+  courses,
+  authors,
+  loadCourses,
+  loadAuthors,
+  saveCourse,
+  history,
+  ...props
+}) {
+  const [course, setCourse] = useState({ ...props.course });
+  //initialize errors to an empty object
+  const [errors, setErrors] = useState({});
 
-function ManageCoursePage({courses,authors,loadCourses,loadAuthors,saveCourse,...props}) {
-const [course,setCourse]=useState({...props.course});
-//initialize errors to an empty object
-const [errors,setErrors]=useState({});
-
-
-  useEffect(()=>{
-  
-      if (courses.length === 0) {
-          loadCourses().catch((error) => {
-          alert("loading courses failed" + error);
-        });
-      }
-  
-      if (authors.length === 0) {
-          loadAuthors().catch((error) => {
-          alert("loading authors failed" + error);
-        });
-      }
-    },[]);
-
-    function handleChange(event){
-      //这里需要再多理解 implement centralized change handler 11 part
-      const {name,value} = event.target;
-      setCourse(prevCourse=>({
-        ...prevCourse,
-        [name]:name === "authorId"? parseInt(value,10):value
-        //events retuns numbers as string so we need to convert authorId to an int here
-      }));
+  useEffect(() => {
+    if (courses.length === 0) {
+      loadCourses().catch((error) => {
+        alert("loading courses failed" + error);
+      });
+    } else {
+      setCourse({ ...props.course });
     }
 
-    function handleSave(event){
-      event.preventDefault();
-      saveCourse(course);
+    if (authors.length === 0) {
+      loadAuthors().catch((error) => {
+        alert("loading authors failed" + error);
+      });
     }
+  }, [props.course]);
 
-
-
-
-    //the empty array as a second argument to effect means the effect will run once when the component mounts
-  
-      return (
-        <div>
-          <CourseForm course={course} errors={errors} authors={authors} onChange={handleChange} onSave={handleSave}/>
-        </div>
-      );
-
+  function handleChange(event) {
+    //这里需要再多理解 implement centralized change handler 11 part
+    const { name, value } = event.target;
+    setCourse((prevCourse) => ({
+      ...prevCourse,
+      [name]: name === "authorId" ? parseInt(value, 10) : value,
+      //events retuns numbers as string so we need to convert authorId to an int here
+    }));
   }
-  
+
+  function handleSave(event) {
+    event.preventDefault();
+    saveCourse(course).then(() => {
+      history.push("/courses");
+    });
+  }
+  //this thunk returns a promise,so we can chain .then on this call
+  //after save is done ,use react router's history to change the url to the course list page
+
+  //the empty array as a second argument to effect means the effect will run once when the component mounts
+
+  return (
+    <div>
+      <CourseForm
+        course={course}
+        errors={errors}
+        authors={authors}
+        onChange={handleChange}
+        onSave={handleSave}
+      />
+    </div>
+  );
+}
 
 ManageCoursePage.propTypes = {
-  course:PropTypes.object.isRequired,
-    authors: PropTypes.array.isRequired,
-    courses: PropTypes.array.isRequired,
-    loadCourses: PropTypes.func.isRequired,
-    loadAuthors: PropTypes.func.isRequired,
-    saveCourse:PropTypes.func.isRequired,
+  course: PropTypes.object.isRequired,
+  authors: PropTypes.array.isRequired,
+  courses: PropTypes.array.isRequired,
+  loadCourses: PropTypes.func.isRequired,
+  loadAuthors: PropTypes.func.isRequired,
+  saveCourse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};
+//this is a selector,it selects data from the redux store
+//can declare this in the course reducer for easy reuse
+export function getCourseBySlug(course, slug) {
+  return course.find((course) => course.slug === slug) || null;
+}
 
-  };
+//any component loaded via <route> get history passed in on props from react router
 
 //we've clarified that we expect dispatch to be passed into the ManageCoursePage component, and it will be passed in because connect automatically passes dispatch in if we omit that second argument, which was mapDispatchToProps.
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0
+      ? getCourseBySlug(state.courses, slug)
+      : newCourse;
   return {
-    course:newCourse,
+    //goal:read th eurl to determine whether the user is trying to create a new course or edit an existing course
+    course: course,
     courses: state.courses,
     authors: state.authors,
   };
 }
 
+//ownProps let us access the component's props.we can use this to read the url data injected on props by react router
+
 const mapDispatchToProps = {
-    loadCourses: courseActions.loadCourses,
-    loadAuthors: authorActions.loadAuthors,
-    saveCourse:courseActions.saveCourse
-  };
-  
-export default connect(
-  mapStateToProps, 
-  mapDispatchToProps
-  )(ManageCoursePage);
+  loadCourses: courseActions.loadCourses,
+  loadAuthors: authorActions.loadAuthors,
+  saveCourse: courseActions.saveCourse,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);

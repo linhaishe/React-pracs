@@ -38,7 +38,8 @@ import CourseForm from "./CourseForm";
 //plain react state remains useful for local state,use redux for more global values
 //to choose redux vs local state,ask"who cares about this data,if only a few closely related components use the data,prefer plain react state
 
-function ManageCoursePage({courses,authors,loadCourses,loadAuthors,...props}) {
+function ManageCoursePage({courses,authors,loadCourses,loadAuthors,saveCourse,...props}) {
+  function ManageCoursePage({courses,authors,loadCourses,loadAuthors,...props}) {
 const [course,setCourse]=useState({...props.course});
 //initialize errors to an empty object
 const [errors,setErrors]=useState({});
@@ -57,13 +58,31 @@ const [errors,setErrors]=useState({});
           alert("loading authors failed" + error);
         });
       }
-    },[])
+    },[]);
+
+    function handleChange(event){
+      //这里需要再多理解 implement centralized change handler 11 part
+      const {name,value} = event.target;
+      setCourse(prevCourse=>({
+        ...prevCourse,
+        [name]:name === "authorId"? parseInt(value,10):value
+        //events retuns numbers as string so we need to convert authorId to an int here
+      }));
+    }
+
+    function handleSave(event){
+      event.preventDefault();
+      saveCourse(course);
+    }
+
+
+
+
     //the empty array as a second argument to effect means the effect will run once when the component mounts
   
       return (
         <div>
-          <CourseForm course={course} errors={errors} authors={authors}/>
-          
+          <CourseForm course={course} errors={errors} authors={authors} onChange={handleChange} onSave={handleSave}/>
         </div>
       );
 
@@ -76,6 +95,8 @@ ManageCoursePage.propTypes = {
     courses: PropTypes.array.isRequired,
     loadCourses: PropTypes.func.isRequired,
     loadAuthors: PropTypes.func.isRequired,
+    saveCourse:PropTypes.func.isRequired,
+
   };
 
 //we've clarified that we expect dispatch to be passed into the ManageCoursePage component, and it will be passed in because connect automatically passes dispatch in if we omit that second argument, which was mapDispatchToProps.
@@ -91,6 +112,10 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
     loadCourses: courseActions.loadCourses,
     loadAuthors: authorActions.loadAuthors,
+    saveCourse:courseActions.saveCourse
   };
   
-export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+  )(ManageCoursePage);

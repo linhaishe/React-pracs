@@ -87,15 +87,22 @@ class CoursesPage extends Component {
         {/* {this.props.courses.map((course) => (
           <div key={course.title}>{course.title}</div>
         ))} */}
-        <Spinner />
-        <button
-          style={{ marginBottom: 20 }}
-          className="btn btn-primary add-course"
-          onClick={() => this.setState({ redirectToAddCoursePage: true })}
-        >
-          Add Course
-        </button>
-        <CourseList courses={this.props.courses} />
+        {/* <Spinner /> 组件实现失败 */}
+
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <div>
+            <button
+              style={{ marginBottom: 20 }}
+              className="btn btn-primary add-course"
+              onClick={() => this.setState({ redirectToAddCoursePage: true })}
+            >
+              Add Course
+            </button>
+            <CourseList courses={this.props.courses} />
+          </div>
+        )}
       </div>
     );
   }
@@ -106,6 +113,7 @@ CoursesPage.propTypes = {
   courses: PropTypes.array.isRequired,
   // createCourse: PropTypes.func.isRequired,
   actions: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 //we've clarified that we expect dispatch to be passed into the CoursesPage component, and it will be passed in because connect automatically passes dispatch in if we omit that second argument, which was mapDispatchToProps.
@@ -125,6 +133,7 @@ function mapStateToProps(state) {
             };
           }),
     authors: state.authors,
+    loading: state.apiCallsInProgress > 0,
   };
 }
 

@@ -6,6 +6,8 @@ import * as authorActions from "../../redux/actions/authorActions";
 import { PropTypes } from "prop-types";
 import { newCourse } from "../../../tools/mockData";
 import CourseForm from "./CourseForm";
+import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 //we are going to want to load our course and author data
 // class ManageCoursePage extends Component {
@@ -51,6 +53,7 @@ function ManageCoursePage({
   const [course, setCourse] = useState({ ...props.course });
   //initialize errors to an empty object
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -80,7 +83,10 @@ function ManageCoursePage({
 
   function handleSave(event) {
     event.preventDefault();
+    setSaving(true);
+    //we dont need to save false,cus going to redirect to another page
     saveCourse(course).then(() => {
+      toast.success("course saved !");
       history.push("/courses");
     });
   }
@@ -89,7 +95,9 @@ function ManageCoursePage({
 
   //the empty array as a second argument to effect means the effect will run once when the component mounts
 
-  return (
+  return authors.length === 0 || courses.length === 0 ? (
+    <Spinner />
+  ) : (
     <div>
       <CourseForm
         course={course}
@@ -97,6 +105,7 @@ function ManageCoursePage({
         authors={authors}
         onChange={handleChange}
         onSave={handleSave}
+        saving={saving}
       />
     </div>
   );

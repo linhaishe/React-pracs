@@ -358,6 +358,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 ```
+
 ```
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
@@ -381,7 +382,9 @@ ManageCoursePage.propTypes = {
   actions: PropTypes.object.isRequired,
 };
 ```
+
 if we declare mapDispatchtoprops as an object instead,each property will automatically be bound to disptch.handy.
+
 ```
 import * as courseActions from "../../redux/actions/courseActions";
 import * as authorActions from "../../redux/actions/authorActions";
@@ -401,6 +404,7 @@ ManageCoursePage.propTypes = {
 };
 
 ```
+
 ```
 import {loadCourses} from "../../redux/actions/courseActions";
 import {loadAuthors} from "../../redux/actions/authorActions";
@@ -427,3 +431,8 @@ ManageCoursePage.propTypes = {
 ```
 
 since only one route in switch can match ,we need to declare this more specific route first,the shorter course url would match our slug road wuold never load
+
+two problems:
+
+1. edit course 页面时候，编辑课程，不能 redirect
+2. courses 页面时 ，loading 功能加载失败,i need to refresh

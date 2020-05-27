@@ -434,5 +434,5 @@ since only one route in switch can match ,we need to declare this more specific 
 
 two problems:
 
-1. edit course 页面时候，编辑课程，不能 redirect
+1. edit course 页面时候，编辑课程，不能 redirect(fixed)
 2. courses 页面时 ，loading 功能加载失败,i need to refresh

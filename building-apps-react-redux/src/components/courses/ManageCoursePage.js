@@ -87,10 +87,15 @@ function ManageCoursePage({
     event.preventDefault();
     setSaving(true);
     //we dont need to save false,cus going to redirect to another page
-    saveCourse(course).then(() => {
-      toast.success("course saved !");
-      history.push("/courses");
-    });
+    saveCourse(course)
+      .then(() => {
+        toast.success("course saved !");
+        history.push("/courses");
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
   }
   //this thunk returns a promise,so we can chain .then on this call
   //after save is done ,use react router's history to change the url to the course list page

@@ -1,7 +1,9 @@
 import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import * as courseActions from "../../redux/actions/courseActions";
-import * as authorActions from "../../redux/actions/authorActions";
+// import * as courseActions from "../../redux/actions/courseActions";
+// import * as authorActions from "../../redux/actions/authorActions";
+import { loadCourses, saveCourse } from "../../redux/actions/courseActions";
+import { loadAuthors } from "../../redux/actions/authorActions";
 
 import { PropTypes } from "prop-types";
 import { newCourse } from "../../../tools/mockData";
@@ -122,8 +124,8 @@ ManageCoursePage.propTypes = {
 };
 //this is a selector,it selects data from the redux store
 //can declare this in the course reducer for easy reuse
-export function getCourseBySlug(course, slug) {
-  return course.find((course) => course.slug === slug) || null;
+export function getCourseBySlug(courses, slug) {
+  return courses.find((course) => course.slug === slug) || null;
 }
 
 //any component loaded via <route> get history passed in on props from react router
@@ -138,7 +140,7 @@ function mapStateToProps(state, ownProps) {
       : newCourse;
   return {
     //goal:read th eurl to determine whether the user is trying to create a new course or edit an existing course
-    course: course,
+    course,
     courses: state.courses,
     authors: state.authors,
   };
@@ -147,9 +149,9 @@ function mapStateToProps(state, ownProps) {
 //ownProps let us access the component's props.we can use this to read the url data injected on props by react router
 
 const mapDispatchToProps = {
-  loadCourses: courseActions.loadCourses,
-  loadAuthors: authorActions.loadAuthors,
-  saveCourse: courseActions.saveCourse,
+  loadCourses,
+  loadAuthors,
+  saveCourse,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);

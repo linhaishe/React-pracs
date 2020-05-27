@@ -83,8 +83,22 @@ function ManageCoursePage({
     }));
   }
 
+  function formIsValid() {
+    const { title, authorId, category } = course;
+    const errors = {};
+
+    if (!title) errors.title = "Title is required.";
+    if (!authorId) errors.author = "Author is required";
+    if (!category) errors.category = "Category is required";
+
+    setErrors(errors);
+    // Form is valid if the errors object still has no properties
+    return Object.keys(errors).length === 0;
+  }
+
   function handleSave(event) {
     event.preventDefault();
+    if (!formIsValid()) return;
     setSaving(true);
     //we dont need to save false,cus going to redirect to another page
     saveCourse(course)
@@ -105,16 +119,14 @@ function ManageCoursePage({
   return authors.length === 0 || courses.length === 0 ? (
     <Spinner />
   ) : (
-    <div>
-      <CourseForm
-        course={course}
-        errors={errors}
-        authors={authors}
-        onChange={handleChange}
-        onSave={handleSave}
-        saving={saving}
-      />
-    </div>
+    <CourseForm
+      course={course}
+      errors={errors}
+      authors={authors}
+      onChange={handleChange}
+      onSave={handleSave}
+      saving={saving}
+    />
   );
 }
 

@@ -14,7 +14,10 @@ export default function apiCallStatusReducer(
   if (action.type == types.BEGIN_API_CALL) {
     return state + 1;
     //if the type ends in success,we will decrement the number of apicallsinprogress
-  } else if (actionTypeEndsInSuccess(action.type)) {
+  } else if (
+    action.type === types.API_CALL_ERROR ||
+    actionTypeEndsInSuccess(action.type)
+  ) {
     return state - 1;
   }
   return state;

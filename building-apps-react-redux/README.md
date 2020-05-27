@@ -437,3 +437,18 @@ two problems:
 1. edit course 页面时候，编辑课程，不能 redirect(fixed)
 2. courses 页面时 ，loading 功能加载失败,i need to refresh
 3. 多次刷新页面会出现，loading courses failedTypeError: Failed to fetch
+
+async/await
+
+```
+  handleDeleteCourse = async course => {
+    toast.success("Course deleted");
+    try {
+      await this.props.actions.deleteCourse(course);
+    } catch (error) {
+      toast.error("Delete failed. " + error.message, { autoClose: false });
+    }
+  };
+
+
+```

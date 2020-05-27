@@ -6,6 +6,7 @@ import { PropTypes } from "prop-types";
 import { bindActionCreators } from "redux";
 import CourseList from "./CourseList";
 import { Redirect } from "react-router-dom";
+import Spinner from "../common/Spinner";
 
 class CoursesPage extends Component {
   //const {courses,authors,actions} = this.props
@@ -86,7 +87,7 @@ class CoursesPage extends Component {
         {/* {this.props.courses.map((course) => (
           <div key={course.title}>{course.title}</div>
         ))} */}
-
+        <Spinner />
         <button
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-course"

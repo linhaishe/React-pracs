@@ -452,3 +452,32 @@ async/await
 
 
 ```
+
+# 13-notes
+testing technoligies
+- testing frameworks
+- helper libraries
+test react component
+- jest
+- enzyme
+- react testing library
+
+## 第二节，可以把各个test软件的对比做笔记记录
+
+`"test":"jest --watch"`
+jest will re-run test when we hit save
+
+```
+ "jest": {
+    "setupFiles": [
+      "./tools/testSetup.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tools/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/tools/styleMock.js"
+    }
+  },
+  ```
+
+it means dont bother typing this. just grap it from the course exercise files
+This tells Jest to ignore imports for various file types like images, videos, sounds, and styles. So although webpack can handle these, this config tells Jest to ignore these imports

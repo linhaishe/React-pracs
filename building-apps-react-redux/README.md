@@ -520,9 +520,13 @@ This is because React Testing Library has the philosophy that you should focus o
 
 I also like that unlike Enzyme, I don't have to explicitly call expect to make an assertion. By making my query, the assertion is automatic.
 
-testing connected components
+### testing connected components
 
 - test markup for ui comps
 - test behavior(Given a click, scroll, drag, change,)
 
 Remember, markup belongs in presentation components. So ideally, the only JSX in a container component is a reference to a child component.
+
+### Testing Action Creators
+
+goal: assert it,return the expected object

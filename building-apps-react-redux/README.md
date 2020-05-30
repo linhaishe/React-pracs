@@ -454,15 +454,17 @@ async/await
 ```
 
 # 13-notes
+
 testing technoligies
+
 - testing frameworks
 - helper libraries
-test react component
+  test react component
 - jest
 - enzyme
 - react testing library
 
-## 第二节，可以把各个test软件的对比做笔记记录
+## 第二节，可以把各个 test 软件的对比做笔记记录
 
 `"test":"jest --watch"`
 jest will re-run test when we hit save
@@ -477,7 +479,43 @@ jest will re-run test when we hit save
       "\\.(css|less)$": "<rootDir>/tools/styleMock.js"
     }
   },
-  ```
+```
 
 it means dont bother typing this. just grap it from the course exercise files
 This tells Jest to ignore imports for various file types like images, videos, sounds, and styles. So although webpack can handle these, this config tells Jest to ignore these imports
+
+```
+    "setupFiles": [
+      "./tools/testSetup.js"
+    ],
+```
+
+jest will run any items that we declare under the setup files array
+
+Snapshots store a record of a component's output. So snapshots can be useful for documenting expected output and regression testing protection.
+
+the value of snapshot tests is they point out any time that your React components rendering changes. So this can protect you from accidental changes.
+
+name snapshots well,so other developers are clear what the expected output is
+
+with shallow:
+
+- no dom is created
+- no child components are rendered
+
+with mount:
+
+- dom is created in memory via jsdom
+- child components are rendered
+
+summary:
+shallow:fast lightweight,test one component in isolation
+mount:more realistic render component and child(test the final dom use fefs or test interaction with child components)
+
+React Testing Library is a compelling alternative to Enzyme. It's unique because it encourages you to write tests based on what your user sees. This tends to lead to tests that are less brittle than Enzyme's tests, and it also helps encourage writing accessible React components.
+
+Now unlike Enzyme, React Testing Library doesn't distinguish between shallow and mount. Components are always mounted.
+
+This is because React Testing Library has the philosophy that you should focus on what the end user sees so the component that you test and its children are rendered.
+
+I also like that unlike Enzyme, I don't have to explicitly call expect to make an assertion. By making my query, the assertion is automatic.

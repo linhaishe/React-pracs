@@ -43,7 +43,7 @@ import { toast } from "react-toastify";
 //plain react state remains useful for local state,use redux for more global values
 //to choose redux vs local state,ask"who cares about this data,if only a few closely related components use the data,prefer plain react state
 
-function ManageCoursePage({
+export function ManageCoursePage({
   courses,
   authors,
   loadCourses,

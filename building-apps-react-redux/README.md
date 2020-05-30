@@ -519,3 +519,10 @@ Now unlike Enzyme, React Testing Library doesn't distinguish between shallow and
 This is because React Testing Library has the philosophy that you should focus on what the end user sees so the component that you test and its children are rendered.
 
 I also like that unlike Enzyme, I don't have to explicitly call expect to make an assertion. By making my query, the assertion is automatic.
+
+testing connected components
+
+- test markup for ui comps
+- test behavior(Given a click, scroll, drag, change,)
+
+Remember, markup belongs in presentation components. So ideally, the only JSX in a container component is a reference to a child component.

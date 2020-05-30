@@ -543,3 +543,5 @@ mock two things:
 ### Testing the Store
 
 we'll create an integration test rather than a unit test. We're going to test the interactions between an action creator, our store, and a reducer.
+
+## Production Builds

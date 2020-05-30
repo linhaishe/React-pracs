@@ -530,3 +530,10 @@ Remember, markup belongs in presentation components. So ideally, the only JSX in
 ### Testing Action Creators
 
 goal: assert it,return the expected object
+
+### testing thunks
+
+mock two things:
+
+- store (reduc-mock-store)
+- http calls (fetch-mock)

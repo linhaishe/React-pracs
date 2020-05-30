@@ -537,3 +537,5 @@ mock two things:
 
 - store (reduc-mock-store)
 - http calls (fetch-mock)
+
+### Testing Reducers

@@ -27,23 +27,15 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState("");
-
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
+  const handleSearch = (event) => {
+    console.log(event.target.value);
   };
 
   return (
     <div className="App">
       <h1>Hello {getTitle("React")}</h1>
       <h1> hc stories </h1>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChange} />
-      <p>
-        {" "}
-        Searching for <strong>{searchTerm}</strong>.{" "}
-      </p>
-      <hr />
+      <Search onSearch={handleSearch} />
       <List list={stories} />
     </div>
     //null
@@ -63,5 +55,28 @@ const List = (props) =>
       <span>{item.points}</span>{" "}
     </div>
   ));
+
+const Search = (props) => {
+  const [searchTerm, setSearchTerm] = React.useState("");
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+//传入相同的event 参数,使得控制板输出内容，外部函数获得argument 并运行
+    props.onSearch(event);
+  };
+
+  return (
+    <div>
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" onChange={handleChange} />
+      <p>
+        {" "}
+        {/* searchTerm 使用 */}
+        Searching for <strong>{searchTerm}</strong>.{" "}
+      </p>
+      <hr />
+    </div>
+  );
+};
 
 export default App;

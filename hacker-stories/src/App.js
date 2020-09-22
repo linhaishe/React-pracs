@@ -2,6 +2,17 @@ import React from "react";
 // import logo from './logo.svg';
 // import './App.css';
 
+const useSemiPersistentState = (key, initialState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || initialState
+  );
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  return [value, setValue];
+};
+
 function getTitle(title) {
   return title;
 }
@@ -31,7 +42,9 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState("React");
+  // const [searchTerm, setSearchTerm] = React.useState("React");
+
+  const [searchTerm, setSearchTerm] = useSemiPersistentState("search", "React");
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -86,5 +99,26 @@ const Search = (props) => (
 );
 //传入相同的event 参数,使得控制板输出内容，外部函数获得argument 并运行
 // props.onSearch(event);
+
+// const Search = ({ search, onSearch }) => (
+//   <div>
+//     <label htmlFor="search">Search: </label>
+//     <input id="search" type="text" value={search} onChange={onSearch} />
+//   </div>
+// );
+
+// const List = ({ list }) =>
+//   list.map((item) => <Item key={item.objectID} item={item} />);
+
+// const Item = ({ item }) => (
+//   <div>
+//     <span>
+//       <a href={item.url}>{item.title}</a>
+//     </span>
+//     <span>{item.author}</span>
+//     <span>{item.num_comments}</span>
+//     <span>{item.points}</span>
+//   </div>
+// );
 
 export default App;
